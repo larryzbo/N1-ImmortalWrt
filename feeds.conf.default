@@ -1,3 +1,4 @@
+# 添加feeds源
 src-git packages https://github.com/immortalwrt/packages.git;openwrt-24.10
 src-git luci https://github.com/immortalwrt/luci.git;openwrt-24.10
 src-git routing https://github.com/openwrt/routing.git;openwrt-24.10
@@ -7,5 +8,5 @@ src-git telephony https://github.com/openwrt/telephony.git;openwrt-24.10
 #src-git oldpackages http://git.openwrt.org/packages.git
 #src-link custom /usr/src/openwrt/custom-feed
 
-# add app
+# 添加ipk源
 src-git nikki https://github.com/nikkinikki-org/OpenWrt-nikki.git;main
