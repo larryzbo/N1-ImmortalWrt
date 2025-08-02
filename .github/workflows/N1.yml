@@ -1,4 +1,4 @@
-name: 为 N1 构建 Immortalwrt-24.10 版本
+name: 为N1构建Immortalwrt-24.10版本
 
 on:
   workflow_dispatch:
