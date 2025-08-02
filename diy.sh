@@ -2,11 +2,9 @@
 
 # Add packages
 git clone https://github.com/ophub/luci-app-amlogic --depth=1 clone/amlogic
-git clone https://github.com/nikkinikki-org/OpenWrt-nikki --depth=1 clone/nikki
 
 # Update packages
-rm -rf feeds/luci/applications/luci-app-nikki
-cp -rf clone/amlogic/luci-app-amlogic clone/nikki/luci-app-nikki feeds/luci/applications/
+cp -rf clone/amlogic/luci-app-amlogic 
 
 # Clean packages
 rm -rf clone
