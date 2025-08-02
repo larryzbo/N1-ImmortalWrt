@@ -1,5 +1,4 @@
-name: 为N1构建Immortalwrt-24.10版本
-
+name: Build ImmortalWrt-24.10 for N1
 on:
   workflow_dispatch:
    inputs:
