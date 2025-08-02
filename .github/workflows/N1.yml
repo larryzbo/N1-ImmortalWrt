@@ -117,7 +117,7 @@ jobs:
           账户: root
           密码: password
 
-      - name: 删除运行记录
+    - name: 删除运行记录
       uses: Mattraks/delete-workflow-runs@main
       with:
         retain_days: 3
