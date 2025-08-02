@@ -18,6 +18,7 @@ env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   REPO_URL: https://github.com/immortalwrt/immortalwrt
   REPO_BRANCH: openwrt-24.10
+  FEEDS_CONF: N1-OpenWrt/feeds.conf.default
   TZ: Asia/Shanghai
 
 jobs:
