@@ -1,4 +1,4 @@
-name: Build ImmortalWrt-24.10 for N1
+name: 为 N1 构建 Immortalwrt-24.10 版本
 
 on:
   workflow_dispatch:
@@ -25,10 +25,10 @@ jobs:
     runs-on: ubuntu-24.04
 
     steps:
-    - name: Checkout
+    - name: 检查Actions
       uses: actions/checkout@main
 
-    - name: Free up space
+    - name: 释放空间
       uses: jlumbroso/free-disk-space@main
       with:
         tool-cache: true
@@ -39,7 +39,7 @@ jobs:
         docker-images: true
         swap-storage: true
 
-    - name: Initialize environment
+    - name: 初始化编译环境
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
@@ -51,14 +51,15 @@ jobs:
         sudo mkdir -p /workdir
         sudo chown $USER:$GROUPS /workdir
 
-    - name: Clone source code
+    - name: 克隆源码
       working-directory: /workdir
       run: |
         git clone $REPO_URL -b $REPO_BRANCH --single-branch --depth=1 openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
 
-    - name: Update & Install feeds
+    - name: 更新和安装feeds
       run: |
+        [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
         chmod +x diy.sh
         cd openwrt
         ./scripts/feeds update -a
@@ -67,16 +68,16 @@ jobs:
         ./scripts/feeds update -a
         ./scripts/feeds install -a
 
-    - name: Load N1 custom config
+    - name: 加载 N1 自定义配置
       run: |
         rm -rf openwrt/files openwrt/.config
         mv files .config openwrt/
 
-    - name: SSH connect to Actions
+    - name: SSH连接到Actions
       uses: P3TERX/ssh2actions@main
       if: github.event.inputs.ssh == 'true'
 
-    - name: Download package
+    - name: 下载软件包
       working-directory: ./openwrt
       run: |
         make defconfig
@@ -84,14 +85,14 @@ jobs:
         find dl -size -1k -exec ls -l {} \;
         find dl -size -1k -exec rm -f {} \;
 
-    - name: Compile N1 firmware
+    - name: 编译N1固件
       run: |
         chmod -R 755 openwrt
         cd openwrt
         echo -e "$(nproc) thread compile"
         make -j$(( $(nproc) + 1 )) || make -j1 V=s
 
-    - name: Package armsr as openwrt
+    - name: 打包ARM内核
       uses: unifreq/openwrt_packit@master
       env:
         OPENWRT_ARMVIRT: openwrt/bin/targets/armsr/armv8/*rootfs.tar.gz
@@ -104,7 +105,7 @@ jobs:
         SW_FLOWOFFLOAD: 0
         SFE_FLOW: 0
 
-    - name: Upload firmware to release
+    - name: 发布固件
       uses: softprops/action-gh-release@master
       with:
         tag_name: OpenWrt_${{ env.PACKAGED_OUTPUTDATE }}
@@ -116,7 +117,14 @@ jobs:
           账户: root
           密码: password
 
-    - name: Delete old releases
+      - name: 删除运行记录
+      uses: Mattraks/delete-workflow-runs@main
+      with:
+        retain_days: 3
+        keep_minimum_runs: 4
+        token: ${{ env.GITHUB_TOKEN }}
+
+    - name: 删除的旧固件
       uses: dev-drprasad/delete-older-releases@master
       with:
         keep_latest: 2
