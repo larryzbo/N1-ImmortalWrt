@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # Add packages
-git clone https://github.com/ophub/luci-app-amlogic --depth=1 clone/amlogic
+rm -rf package/luci-app-amlogic
+git clone https://github.com/ophub/luci-app-amlogic.git package/luci-app-amlogic
 
 # Update packages
 cp -rf clone/amlogic/luci-app-amlogic 
