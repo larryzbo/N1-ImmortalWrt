@@ -10,3 +10,4 @@ src-git telephony https://github.com/openwrt/telephony.git;openwrt-24.10
 
 # 添加ipk源
 src-git nikki https://github.com/nikkinikki-org/OpenWrt-nikki.git;main
+src-git amlogic https://github.com/ophub/luci-app-amlogic.git;main
