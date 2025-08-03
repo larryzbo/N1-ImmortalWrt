@@ -1,10 +1,3 @@
-#!/bin/bash
-
-# Add packages
-git clone https://github.com/ophub/luci-app-amlogic --depth=1 clone/amlogic
-
-# Update packages
-cp -rf clone/amlogic/luci-app-amlogic feeds/luci/applications/
-
-# Clean packages
-rm -rf clone
+# Add a feed source
+echo 'src-git nikki https://github.com/nikkinikki-org/OpenWrt-nikki' >>feeds.conf.default
+echo 'src-git amlogic https://github.com/ophub/luci-app-amlogic.git' >>feeds.conf.default
