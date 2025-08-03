@@ -1,4 +1,4 @@
-name: Build ImmortalWrt-24.10 for N1
+8name: Build ImmortalWrt-24.10 for N1
 
 on:
   workflow_dispatch:
@@ -60,10 +60,8 @@ jobs:
     - name: 更新和安装feeds
       run: |
         chmod +x diy.sh
+        ./diy.sh 
         cd openwrt
-        ./scripts/feeds update -a
-        ./scripts/feeds install -a
-        $GITHUB_WORKSPACE/diy.sh
         ./scripts/feeds update -a
         ./scripts/feeds install -a
 
@@ -88,8 +86,8 @@ jobs:
       run: |
         chmod -R 755 openwrt
         cd openwrt
-        echo -e "$(nproc) thread compile"
-        make -j$(( $(nproc) + 1 )) || make -j1 V=s
+        echo "编译线程数: $(($(nproc) * 3 / 2))"
+        make -j$(( $(nproc) * 3 / 2 )) || make -j1 V=s
 
     - name: 打包ARM内核
       uses: unifreq/openwrt_packit@master
