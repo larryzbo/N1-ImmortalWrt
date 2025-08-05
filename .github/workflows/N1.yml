@@ -86,9 +86,9 @@ jobs:
       run: |
         chmod -R 755 openwrt
         cd openwrt
-        echo "编译线程数: $(($(nproc) * 3 / 2))"
-        make -j$(( $(nproc) * 3 / 2 )) || make -j1 V=s
-
+        echo -e "$(nproc) thread compile"
+        make -j$(( $(nproc) + 1 )) || make -j1 V=s
+        
     - name: 打包ARM内核
       uses: unifreq/openwrt_packit@master
       env:
