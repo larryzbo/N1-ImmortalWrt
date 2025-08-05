@@ -2,4 +2,3 @@
 
 # 添加源
 echo 'src-git nikki https://github.com/nikkinikki-org/OpenWrt-nikki.git;main' >> openwrt/feeds.conf.default
-echo 'src-git amlogic https://github.com/ophub/luci-app-amlogic.git;main' >> openwrt/feeds.conf.default
