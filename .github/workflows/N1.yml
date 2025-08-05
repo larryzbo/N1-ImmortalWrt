@@ -60,8 +60,8 @@ jobs:
     - name: 更新和安装feeds
       run: |
         chmod +x diy.sh
-        cd openwrt
         ./diy.sh
+        cd openwrt
         ./scripts/feeds update -a
         ./scripts/feeds install -a
 
