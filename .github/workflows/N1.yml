@@ -54,8 +54,9 @@ jobs:
     - name: 克隆源码
       working-directory: /workdir
       run: |
-        git clone $REPO_URL -b $REPO_BRANCH --single-branch --filter=blob:none --depth=1 immortalwrt
+        git clone $REPO_URL -b $REPO_BRANCH --single-branch --depth=1 openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
+
 
     - name: 更新和安装feeds
       run: |
