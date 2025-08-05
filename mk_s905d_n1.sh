@@ -36,7 +36,7 @@ check_file ${OPWRT_ROOTFS_GZ}
 echo "Use $OPWRT_ROOTFS_GZ as openwrt rootfs!"
 
 # 目标镜像文件
-TGT_IMG="${WORK_DIR}/ImmortalWrt_${SOC}_${BOARD}_${OPENWRT_VER}_k${KERNEL_VERSION}${SUBVER}.img"
+TGT_IMG="${WORK_DIR}/immortalwrt_${SOC}_${BOARD}_${OPENWRT_VER}_k${KERNEL_VERSION}${SUBVER}.img"
 
 # 补丁和脚本
 ###########################################################################
@@ -149,10 +149,10 @@ INITRD=/uInitrd
 # 下列 dtb，用到哪个就把哪个的#删除，其它的则加上 # 在行首
 
 # 用于 Phicomm N1
-#FDT=/dtb/amlogic/meson-gxl-s905d-phicomm-n1.dtb
+FDT=/dtb/amlogic/meson-gxl-s905d-phicomm-n1.dtb
 
 # 用于 Phicomm N1 (thresh)
-FDT=/dtb/amlogic/meson-gxl-s905d-phicomm-n1-thresh.dtb
+#FDT=/dtb/amlogic/meson-gxl-s905d-phicomm-n1-thresh.dtb
 
 APPEND=root=UUID=${ROOTFS_UUID} rootfstype=btrfs rootflags=compress=zstd:${ZSTD_LEVEL} console=ttyAML0,115200n8 console=tty0 no_console_suspend consoleblank=0 fsck.fix=yes fsck.repair=yes net.ifnames=0 cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory swapaccount=1
 EOF
