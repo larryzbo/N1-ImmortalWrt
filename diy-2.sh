@@ -1,3 +1,6 @@
+echo "开始 DIY2 配置……"
+echo "========================="
+
 #!/bin/bash
 
 # Add packages
@@ -8,3 +11,9 @@ cp -rf clone/amlogic/luci-app-amlogic  feeds/luci/applications/
 
 # Clean packages
 rm -rf clone
+
+./scripts/feeds update -a
+./scripts/feeds install -a
+
+echo "========================="
+echo " DIY2 配置完成……"
