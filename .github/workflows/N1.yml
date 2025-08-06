@@ -76,9 +76,6 @@ jobs:
       run: |
         rm -rf openwrt/files openwrt/.config
         mv files .config openwrt/
-        chmod +x $DIY_P2_SH
-        cd openwrt
-        $GITHUB_WORKSPACE/$DIY_P2_SH
         
     - name: SSH连接到Actions
       uses: P3TERX/ssh2actions@main
