@@ -1,6 +1,3 @@
-echo "开始 DIY2 配置……"
-echo "========================="
-
 #!/bin/bash
 
 # Add packages
@@ -14,6 +11,3 @@ rm -rf clone
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
-
-echo "========================="
-echo " DIY2 配置完成……"
