@@ -18,6 +18,8 @@ env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   REPO_URL: https://github.com/immortalwrt/immortalwrt
   REPO_BRANCH: openwrt-24.10
+  DIY_P1_SH: diy-1.sh
+  DIY_P2_SH: diy-2.sh
   TZ: Asia/Shanghai
 
 jobs:
@@ -59,11 +61,17 @@ jobs:
 
     - name: 更新和安装feeds
       run: |
-        chmod +x diy.sh
-        cd openwrt
-        ./diy.sh
-        ./scripts/feeds update -a
-        ./scripts/feeds install -a
+       chmod +x $DIY_P1_SH
+       cd openwrt
+       $GITHUB_WORKSPACE/$DIY_P1_SH
+       ./scripts/feeds update -a
+       ./scripts/feeds install -a
+       cd $GITHUB_WORKSPACE  
+       chmod +x $DIY_P2_SH
+       cd openwrt
+       $GITHUB_WORKSPACE/$DIY_P2_SH
+       ./scripts/feeds update -a
+       ./scripts/feeds install -a
 
     - name: 加载 N1 自定义配置
       run: |
