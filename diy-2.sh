@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# Add packages
+# 添加包
 git clone https://github.com/ophub/luci-app-amlogic --depth=1 clone/amlogic
 
-# Update packages
+# 升级包
 cp -rf clone/amlogic/luci-app-amlogic  feeds/luci/applications/
 
-# Clean packages
+# 清理包
 rm -rf clone
