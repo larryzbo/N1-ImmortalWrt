@@ -59,9 +59,9 @@ jobs:
 
     - name: 更新和安装feeds
       run: |
-        chmod +x $diy.sh
+        chmod +x diy.sh
         cd openwrt
-        $GITHUB_WORKSPACE/$diy.sh
+        ./diy.sh
         ./scripts/feeds update -a
         ./scripts/feeds install -a
 
