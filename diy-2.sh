@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# 添加源
+echo 'src-git nikki https://github.com/nikkinikki-org/OpenWrt-nikki.git;main' >> feeds.conf.default
+
 # 添加包
 git clone https://github.com/ophub/luci-app-amlogic --depth=1 clone/amlogic
 
