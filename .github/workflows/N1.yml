@@ -67,14 +67,15 @@ jobs:
         $GITHUB_WORKSPACE/$DIY_P1_SH
         ./scripts/feeds update -a
         ./scripts/feeds install -a
-        chmod +x $DIY_P2_SH
-        cd openwrt
-        $GITHUB_WORKSPACE/$DIY_P2_SH
+    
 
     - name: 加载 N1 自定义配置
       run: |
         rm -rf openwrt/files openwrt/.config
         mv files .config openwrt/
+        chmod +x $DIY_P2_SH
+        cd openwrt
+        $GITHUB_WORKSPACE/$DIY_P2_SH
         
         
     - name: SSH连接到Actions
