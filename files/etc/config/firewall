@@ -1,3 +1,4 @@
+
 config defaults
 	option synflood_protect '1'
 	option input 'ACCEPT'
@@ -21,3 +22,4 @@ config zone 'docker'
 	option forward 'ACCEPT'
 	option name 'docker'
 	list network 'docker'
+
