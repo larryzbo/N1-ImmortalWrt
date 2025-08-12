@@ -17,7 +17,7 @@ on:
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   REPO_URL: https://github.com/immortalwrt/immortalwrt
-  REPO_BRANCH: v24.10.2
+  REPO_REF: v24.10.2
   DIY_P1_SH: diy-1.sh
   DIY_P2_SH: diy-2.sh
   TZ: Asia/Shanghai
@@ -56,7 +56,7 @@ jobs:
     - name: 克隆源码
       working-directory: /workdir
       run: |
-        git clone $REPO_URL -b $REPO_BRANCH --single-branch --depth=1 openwrt
+        git clone $REPO_URL -b $REPO_REF --single-branch --depth=1 openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
 
     - name: 更新和安装feeds
