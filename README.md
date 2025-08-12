@@ -2,7 +2,7 @@
 本固件适配斐讯 N1 旁路由模式，追求轻量（不具备 PPPoE、WiFi 相关功能）<br>
 每周一0点自动开始打包<br>
 如遇问题可参考本项目Wiki<br>
-固件包含Argon皮肤、完整 IPv6 支持，以及下列 luci-app：<br>
+固件包含完整 IPv6 支持，以及下列 luci-app：<br>
 [luci-app-amlogic](https://github.com/ophub/luci-app-amlogic)：系统更新、文件传输、CPU 调频等<br>
 luci-app-dockerman：docker 管理<br>
 luci-app-ttyd： 终端<br>
