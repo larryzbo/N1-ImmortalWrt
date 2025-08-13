@@ -73,8 +73,6 @@ config mixin 'mixin'
 	option geoip_mmdb_url 'https://gh-proxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country-lite.mmdb'
 	option geoip_dat_url 'https://gh-proxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip-lite.dat'
 	option geoip_asn_url 'https://gh-proxy.com/https://github.com/xishang0128/geoip/releases/download/latest/GeoLite2-ASN.mmdb'
-	option ipv6 '0'
-	option dns_ipv6 '0'
 	list fake_ip_filters '+.lan'
 	list fake_ip_filters '+.local'
 	list fake_ip_filters '+.bing.com'
@@ -133,7 +131,6 @@ config routing 'routing'
 config authentication
 	option enabled '1'
 	option username 'nikki'
-	option password '930465'
 
 config hosts
 	option enabled '0'
