@@ -30,6 +30,6 @@ config interface 'lan6'
 	option norelease '1'
 
 config device
-	option name 'dummy0'
+	option name 'eth0'
 	option mtu '1492'
 
