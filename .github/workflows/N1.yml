@@ -18,8 +18,6 @@ env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   REPO_URL: https://github.com/immortalwrt/immortalwrt
   REPO_REF: v24.10.2
-  DIY_P1_SH: diy-1.sh
-  DIY_P2_SH: diy-2.sh
   TZ: Asia/Shanghai
 
 jobs:
@@ -59,21 +57,16 @@ jobs:
         git clone $REPO_URL -b $REPO_REF --single-branch --depth=1 openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
 
-    - name: 更新和安装feeds
+    - name: 更新并安装feeds
+      working-directory: ./openwrt
       run: |
-       chmod +x $DIY_P1_SH
-       cd openwrt
-       $GITHUB_WORKSPACE/$DIY_P1_SH
-       ./scripts/feeds update -a
-       ./scripts/feeds install -a
-       cd $GITHUB_WORKSPACE  
-       chmod +x $DIY_P2_SH
-       cd openwrt
-       $GITHUB_WORKSPACE/$DIY_P2_SH
-       ./scripts/feeds update -a
-       ./scripts/feeds install -a
+        chmod +x $GITHUB_WORKSPACE/diy.sh
+        ./scripts/feeds update -a
+        $GITHUB_WORKSPACE/diy.sh
+        ./scripts/feeds update -a
+        ./scripts/feeds install -a
 
-    - name: 加载 N1 自定义配置
+    - name: 加载自定义配置
       run: |
         rm -rf openwrt/files openwrt/.config
         mv files .config openwrt/
@@ -94,16 +87,17 @@ jobs:
       run: |
         chmod -R 755 openwrt
         cd openwrt
-        echo -e "$(nproc) thread compile"
-        make -j$(( $(nproc) + 1 )) || make -j1 V=s
+        echo -e "$(nproc) 核心"
+        make -j$(($(nproc) + 1)) || make -j$(($(nproc) / 2)) || make -j1 V=s
         
     - name: 打包ARM内核
       uses: unifreq/openwrt_packit@master
       env:
         OPENWRT_ARMVIRT: openwrt/bin/targets/armsr/armv8/*rootfs.tar.gz
+        OPENWRT_VER: ${{ env.REPO_REF }}
         KERNEL_REPO_URL: breakingbadboy/OpenWrt
         KERNEL_VERSION_NAME: 6.6.y
-        PACKAGE_SOC: diy
+        PACKAGE_SOC: s905d
         GZIP_IMGS: .xz
         SCRIPT_DIY_PATH: mk_s905d_n1.sh
         WHOAMI: Winnie-0721
@@ -118,7 +112,7 @@ jobs:
         body: |
           首次使用建议全新刷写
           * 基本信息
-          默认开启DHCP
+          默认开启 DHCP
           账户: root
           密码: password
 

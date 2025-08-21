@@ -6,9 +6,9 @@ source public_funcs
 init_work_env
 
 # 盒子型号识别参数 
-PLATFORM=amlogic
-SOC=s905d
-BOARD=n1
+PLATFORM=Amlogic
+SOC=S905d
+BOARD=N1
 
 # 让N1一直有wifi可用，以减少抱怨
 # 5.10(及以上)内核是否启用wifi  1:启用 0:禁用
