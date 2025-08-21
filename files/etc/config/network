@@ -11,13 +11,8 @@ config interface 'docker'
 	option auto '0'
 
 config interface 'lan'
-	option proto 'static'
-	option netmask '255.255.255.0'
+	option proto 'dhcp'
 	option device 'eth0'
-	option ipaddr '192.168.1.3'
-	option gateway '192.168.1.2'
-	option delegate '0'
-	list dns '192.168.1.2'
 
 config device
 	option type 'bridge'
@@ -26,3 +21,15 @@ config device
 config globals 'globals'
 	option packet_steering '1'
 	option steering_flows '256'
+
+config interface 'lan6'
+	option proto 'dhcpv6'
+	option device '@lan'
+	option reqaddress 'try'
+	option reqprefix 'auto'
+	option norelease '1'
+
+config device
+	option name 'dummy0'
+	option mtu '1492'
+
