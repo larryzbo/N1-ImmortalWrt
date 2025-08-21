@@ -1,3 +1,4 @@
+
 config interface 'loopback'
 	option device 'lo'
 	option proto 'static'
@@ -16,8 +17,7 @@ config interface 'lan'
 	option ipaddr '192.168.1.3'
 	option gateway '192.168.1.2'
 	option delegate '0'
-    list dns '192.168.1.2'
-
+	list dns '192.168.1.2'
 
 config device
 	option type 'bridge'
@@ -33,3 +33,4 @@ config interface 'lan6'
 	option reqaddress 'try'
 	option reqprefix 'auto'
 	option norelease '1'
+
