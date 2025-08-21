@@ -26,11 +26,3 @@ config device
 config globals 'globals'
 	option packet_steering '1'
 	option steering_flows '256'
-
-config interface 'lan6'
-	option proto 'dhcpv6'
-	option device '@lan'
-	option reqaddress 'try'
-	option reqprefix 'auto'
-	option norelease '1'
-
