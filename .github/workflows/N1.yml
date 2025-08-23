@@ -55,15 +55,16 @@ jobs:
     - name: 更新并安装feeds
       working-directory: ./openwrt
       run: |
-        chmod +x $GITHUB_WORKSPACE/diy.sh
         ./scripts/feeds update -a
-        $GITHUB_WORKSPACE/diy.sh
         ./scripts/feeds install -a
 
     - name: 加载自定义配置
+      working-directory: ./openwrt
       run: |
-        rm -rf openwrt/files openwrt/.config
-        mv files .config openwrt/
+        chmod +x $GITHUB_WORKSPACE/diy.sh
+        $GITHUB_WORKSPACE/diy.sh
+        rm -rf openwrt/files .config
+        mv files .config 
         
     - name: SSH连接到Actions
       uses: P3TERX/ssh2actions@main
