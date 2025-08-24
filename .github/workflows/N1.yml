@@ -88,7 +88,7 @@ jobs:
         chmod -R 755 openwrt
         cd openwrt
         echo -e "可使用的核心数：$(nproc)"
-        make -j$(($(nproc) + 2)) || make -j$nproc  || -j$(($nproc / 2)) || -j1 V=s
+        make -j$(($(nproc) + 2)) || make -j$nproc  || make -j$(($nproc / 2))
         
     - name: 打包ARM内核
       uses: unifreq/openwrt_packit@master
@@ -96,7 +96,7 @@ jobs:
         OPENWRT_ARMVIRT: openwrt/bin/targets/armsr/armv8/*rootfs.tar.gz
         KERNEL_REPO_URL: breakingbadboy/OpenWrt
         KERNEL_VERSION_NAME: 6.6.y
-        PACKAGE_SOC: s905d
+        PACKAGE_SOC: diy
         GZIP_IMGS: .xz
         SCRIPT_DIY_PATH: mk_s905d_n1.sh
         WHOAMI: Winnie-0721
