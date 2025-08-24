@@ -40,8 +40,10 @@ jobs:
         swap-storage: true
 
     - name: 初始化编译环境
+      env:
+        DEBIAN_FRONTEND: noninteractive
       run: |
-        curl -s https://build-scripts.immortalwrt.org/init_build_environment.sh | sudo bash
+        curl -s https://build-scripts.immortalwrt.org/init_build_environment.sh | sudo bash > /dev/null
         sudo timedatectl set-timezone "$TZ"
         sudo mkdir -p /workdir
         sudo chown $USER:$GROUPS /workdir

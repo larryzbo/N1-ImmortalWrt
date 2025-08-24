@@ -38,6 +38,7 @@ echo "Use $OPWRT_ROOTFS_GZ as openwrt rootfs!"
 # 目标镜像文件
 TGT_IMG="${WORK_DIR}/ImmortalWrt_${SOC}_${BOARD}_${OPENWRT_VER}_k${KERNEL_VERSION}${SUBVER}.img"
 
+
 # 补丁和脚本
 ###########################################################################
 KMOD="${PWD}/files/kmod"
