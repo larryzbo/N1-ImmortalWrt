@@ -32,7 +32,7 @@ config mixin 'mixin'
 	option mode 'rule'
 	option match_process 'off'
 	option ipv6 '0'
-	option ui_url 'https://github.com/Zephyruso/zashboard/releases/latest/download/dist-cdn-fonts.zip'
+	option ui_url 'https://gh-proxy.com/Zephyruso/zashboard/releases/latest/download/dist-cdn-fonts.zip'
 	option api_listen '[::]:9090'
 	option selection_cache '1'
 	option allow_lan '1'
@@ -201,10 +201,3 @@ config sniff
 config editor 'editor'
 
 config log 'log'
-
-config subscription
-	option name '机场订阅'
-	option url 'http://192.168.10.41:3001/NFsfkHeICpSNO4mvWzJt/download/collection/mihomo?target=ClashMeta'
-	option user_agent 'clash'
-	option prefer 'remote'
-
