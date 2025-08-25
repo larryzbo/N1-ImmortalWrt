@@ -22,4 +22,3 @@ config zone 'docker'
 	option forward 'ACCEPT'
 	option name 'docker'
 	list network 'docker'
-
