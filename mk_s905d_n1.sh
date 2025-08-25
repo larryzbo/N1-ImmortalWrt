@@ -6,9 +6,9 @@ source public_funcs
 init_work_env
 
 # 盒子型号识别参数 
-PLATFORM=Amlogic
-SOC=S905d
-BOARD=N1
+PLATFORM=amlogic
+SOC=s905d
+BOARD=n1
 
 # 让N1一直有wifi可用，以减少抱怨
 # 5.10(及以上)内核是否启用wifi  1:启用 0:禁用
@@ -36,7 +36,7 @@ check_file ${OPWRT_ROOTFS_GZ}
 echo "Use $OPWRT_ROOTFS_GZ as openwrt rootfs!"
 
 # 目标镜像文件
-TGT_IMG="${WORK_DIR}/ImmortalWrt_${SOC}_${BOARD}_${OPENWRT_VER}_k${KERNEL_VERSION}${SUBVER}.img"
+TGT_IMG="${WORK_DIR}/ImmortalWrt_${OPENWRT_VER}_${SOC}_${BOARD}_k${KERNEL_VERSION}${SUBVER}.img"
 # 补丁和脚本
 ###########################################################################
 KMOD="${PWD}/files/kmod"
