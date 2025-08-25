@@ -25,7 +25,7 @@ config globals 'globals'
 config interface 'lan6'
 	option proto 'dhcpv6'
 	option device '@lan'
-	option reqaddress 'try'
+	option reqaddress 'none'
 	option reqprefix 'auto'
 	option norelease '1'
 
