@@ -1,0 +1,116 @@
+#!/bin/sh /etc/rc.common
+
+START=99
+USE_PROCD=1
+
+_DOCKERD=/etc/init.d/dockerd
+
+docker_running(){
+	docker version > /dev/null 2>&1
+	return $?
+}
+
+add_ports() {
+	[ $# -eq 0 ] && return
+	$($_DOCKERD running) && docker_running || return 1
+	ids=$@
+	for id in $ids; do
+		id=$(docker ps --filter "ID=$id" --quiet)
+		[ -z "$id" ] && {
+			 echo "Docker container not running"; 
+			 return 1;
+		}
+		ports=$(docker ps --filter "ID=$id" --format "{{.Ports}}")
+		for port in $ports; do
+				echo "$port" | grep -qE "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}:.*$" || continue;
+				[ "${port: -1}" == "," ] && port="${port:0:-1}"
+				local protocol=""
+				[ "${port%tcp}" != "$port" ] && protocol="/tcp"
+				[ "${port%udp}" != "$port" ] && protocol="/udp"
+				[ "$protocol" == "" ] && continue
+				port="${port%%->*}"
+				port="${port##*:}"
+				uci_add_list dockerd dockerman ac_allowed_ports "${port}${protocol}"
+		done
+	done
+	uci_commit dockerd
+}
+
+convert() {
+	_convert() {
+		_id=$1
+		_id=$(docker ps --all --filter "ID=$_id" --quiet)
+		if [ -z "$_id" ]; then
+			uci_remove_list dockerd dockerman ac_allowed_container "$1"
+			return
+		fi
+		if /etc/init.d/dockerman add_ports "$_id"; then
+			uci_remove_list dockerd dockerman ac_allowed_container "$_id"
+		fi
+	}
+	config_list_foreach dockerman ac_allowed_container _convert
+	uci_commit dockerd
+}
+
+init_dockerman_chain(){
+	nft list table inet filter >/dev/null 2>&1 || nft add table inet filter
+	nft delete chain inet filter docker_man 2>/dev/null
+	nft add chain inet filter docker_man { type filter hook forward priority 0; }
+}
+
+delete_dockerman_chain(){
+	nft delete chain inet filter docker_man 2>/dev/null
+}
+
+add_allowed_interface(){
+	nft add rule inet filter docker_man iifname "$1" oifname "docker0" accept
+}
+
+add_allowed_ports(){
+	port=$1
+	if [ "${port%/tcp}" != "$port" ]; then
+		nft add rule inet filter docker_man tcp dport ${port%/tcp} ct direction original accept
+	elif [ "${port%/udp}" != "$port" ]; then
+		nft add rule inet filter docker_man udp dport ${port%/udp} ct direction original accept
+	fi
+}
+
+handle_allowed_ports(){
+	config_list_foreach "dockerman" "ac_allowed_ports" add_allowed_ports
+}
+
+handle_allowed_interface(){
+	config_list_foreach "dockerman" "ac_allowed_interface" add_allowed_interface
+	nft add rule inet filter docker_man ct state established,related oifname "docker0" accept
+	nft add rule inet filter docker_man ct state new,invalid oifname "docker0" drop
+	nft add rule inet filter docker_man accept
+}
+
+start_service(){
+	[ -x "$_DOCKERD" ] && $($_DOCKERD enabled) || return 0
+	delete_dockerman_chain
+	$($_DOCKERD running) && docker_running || return 0
+	init_dockerman_chain
+	handle_allowed_ports
+	handle_allowed_interface
+}
+
+stop_service(){
+	delete_dockerman_chain
+}
+
+service_triggers() {
+	procd_add_reload_trigger 'dockerd'
+}
+
+reload_service() {
+	start
+}
+
+boot() {
+	sleep 5s
+	start
+}
+
+extra_command "add_ports" "Add allowed ports based on the container ID(s)"
+extra_command "convert" "Convert Ac allowed container to AC allowed ports"
