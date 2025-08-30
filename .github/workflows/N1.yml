@@ -88,7 +88,7 @@ jobs:
         chmod -R 755 openwrt
         cd openwrt
         echo -e "可使用的核心数：$(nproc)"
-        make -j$(($(nproc) + 2)) || make -j$nproc  || make -j$(($nproc / 2))
+        make -j$(($(nproc) * 3 / 2)) || make -j$(nproc) || make -j$(($(nproc) / 2))
         
     - name: 打包ARM内核
       uses: unifreq/openwrt_packit@master
