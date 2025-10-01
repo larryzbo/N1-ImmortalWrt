@@ -17,7 +17,7 @@ on:
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   REPO_URL: https://github.com/immortalwrt/immortalwrt
-  REPO_REF: v24.10.2
+  REPO_REF: v24.10.3
   TZ: Asia/Shanghai
 
 jobs:
