@@ -7,9 +7,3 @@ enClash.git;main" >> feeds.conf.default
 echo "src-git openclash https://github.com/xiaorouji/openwrt-passwall.git;main" >> feeds.conf.default
 
 
-# Update packages
-rm -rf feeds/luci/applications/luci-app-passwall
-cp -rf clone/amlogic/luci-app-amlogic clone/passwall/luci-app-passwall feeds/luci/applications/
-
-# Clean packages
-rm -rf clone
