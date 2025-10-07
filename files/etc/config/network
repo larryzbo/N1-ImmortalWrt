@@ -5,31 +5,22 @@ config interface 'loopback'
 	option ipaddr '127.0.0.1'
 	option netmask '255.0.0.0'
 
-config interface 'docker'
-	option device 'docker0'
-	option proto 'none'
-	option auto '0'
-
-config interface 'lan'
-	option proto 'dhcp'
-	option device 'eth0'
-
-config device
-	option type 'bridge'
-	option name 'docker0'
-
 config globals 'globals'
 	option packet_steering '1'
-	option steering_flows '256'
-
-config interface 'lan6'
-	option proto 'dhcpv6'
-	option device '@lan'
-	option reqaddress 'none'
-	option reqprefix 'auto'
-	option norelease '1'
 
 config device
-	option name 'eth0'
-	option mtu '1492'
+	option name 'br-lan'
+	option type 'bridge'
+	list ports 'eth0'
+	option promisc '1'
+
+config interface 'lan'
+	option device 'br-lan'
+	option proto 'static'
+	option ipaddr '192.168.10.200'
+	option netmask '255.255.255.0'
+	option ip6assign '60'
+	option gateway '192.168.10.1'
+	option delegate '0'
+	list dns '223.5.5.5'
 
